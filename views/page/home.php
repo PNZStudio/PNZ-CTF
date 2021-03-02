@@ -18,9 +18,7 @@
         <div class="col-sm-8 mt-3">
             <div class="card">
                 <div class="card-body">
-                    <center>
-                        <h3>Coming Soon...</h3>
-                    </center>
+                    
                 </div>
             </div>
         </div>

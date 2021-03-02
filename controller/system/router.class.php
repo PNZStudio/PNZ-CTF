@@ -35,6 +35,23 @@ class router
 		$this->router->map("GET", "/contact", function () {
 			$this->loadpage("contact");
 		});
+		// BACKEND //
+		$this->router->map("GET", "/backend", function () {
+			$this->loadbackend("home");
+		});
+		$this->router->map("GET", "/backend/home", function () {
+			$this->loadbackend("home");
+		});
+		$this->router->map("GET", "/backend/challenges", function () {
+			$this->loadbackend("challenges");
+		});
+		$this->router->map("GET", "/backend/users", function () {
+			$this->loadbackend("users");
+		});
+		$this->router->map("GET", "/backend/setting", function () {
+			$this->loadbackend("setting");
+		});
+
 		// API //
 		$this->router->map("POST", "/api/v1/me", function () {
 			$this->loadapi("me");
@@ -42,7 +59,6 @@ class router
 		$this->router->map("POST", "/api/v1/auth", function () {
 			$this->loadapi("auth");
 		});
-
 	}
 
 	private function end_router()
@@ -59,6 +75,12 @@ class router
 		require_once 'views/body/style.php';
 		require_once 'views/body/header.php';
 		require_once 'views/body/navbar.php';
+	}
+	private static function htmlheaderbackend()
+	{
+		require_once 'views/body/style.php';
+		require_once 'views/body/header.php';
+		require_once 'views/body/backendnavbar.php';
 	}
 	private static function htmlfooter()
 	{
@@ -84,5 +106,12 @@ class router
 	{
 		$class = new system();
 		require_once "controller/api/" . $nameapi . ".php";
+	}
+	private function loadbackend($backendname)
+	{
+		$class = new system();
+		Self::htmlheaderbackend();
+		require_once "views/backend/" . $backendname . ".php";
+		Self::htmlfooter();
 	}
 }
