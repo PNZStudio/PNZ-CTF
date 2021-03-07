@@ -32,6 +32,6 @@ class system extends pdo_connection{
 		return "PNZZA".substr(strtoupper(md5(base64_encode(md5(md5(base64_encode($pass)))))),8);
 	}
 	public function re($url){
-		header("location: ".$url);
+		echo "<script>location.href = '".$url."'</script>";
 	}
 }

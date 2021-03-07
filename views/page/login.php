@@ -20,7 +20,7 @@ if(isset($_SESSION['login'])){
                         <label for="password">Password</label>
                     </div>
                     <div class="row px-3 mb-4">
-                        <div class="custom-control custom-checkbox custom-control-inline"> <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> <label for="chk1" class="custom-control-label text-sm">จำการเข้าสู่ระบบ</label> </div> <a href="/password-reset" class="ml-auto mb-0 text-sm">ลืมรหัส?</a>
+                        <div class="custom-control custom-control-inline"> </div> <a href="/password-reset" class="ml-auto mb-0 text-sm">ลืมรหัสผ่าน?</a>
                     </div>
                     <center class="mb-3">
                         <div class="g-recaptcha" data-sitekey="6Le1s3MaAAAAAJLLj7FIPxbTstbENLfPT_xurd2P"></div>

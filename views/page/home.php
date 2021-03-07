@@ -1,6 +1,6 @@
 <?php
 
-if(!isset($_SESSION['login'])){
+if (!isset($_SESSION['login'])) {
     $class->re("/login");
 }
 
@@ -12,8 +12,8 @@ if(!isset($_SESSION['login'])){
                 <div class="card-body">
                     <center>
                         <img src="/views/assets/img/icon.png" height="120"><br>
-                        <h3>PNZ Studio</h3>
-                        <h5>ID : #0001</h5>
+                        <h3 id="name">loading...</h3>
+                        <h5>ID : #<span id="uid">loading...</span></h5>
                         <hr>
                         <button onclick="re('/logout')" class="btn btn-block btn-dark">
                             <i class="fas fa-sign-out"></i> Logout
@@ -33,3 +33,23 @@ if(!isset($_SESSION['login'])){
         </div>
     </div>
 </div>
+<script>
+    $.post('/api/v1/me', {
+        token: login
+    }, function(res) {
+        if (res.status == 'success') {
+            $("#name").html(res.data.username);
+            $("#uid").html(res.data.uid);
+        }
+    }, 'json');
+    setInterval(function() {
+        $.post('/api/v1/me', {
+            token: login
+        }, function(res) {
+            if (res.status == 'success') {
+                $("#name").html(res.data.username);
+                $("#uid").html(res.data.uid);
+            }
+        }, 'json');
+    }, 3000);
+</script>

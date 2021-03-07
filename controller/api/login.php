@@ -16,11 +16,6 @@ if(isset($_POST['username']) AND isset($_POST['password']) AND isset($_POST['g-r
                 "msg" => "เข้าสู่ระบบเรียบร้อย!"
             )));
             $_SESSION['login'] = $check[0]['token'];
-            if(isset($_POST['chk'])){
-                if($_POST['chk'] == "on"){
-                    setcookie('token', $token, time()+60*60*24*100,'/');
-                }
-            }
         }else{
             print_r(json_encode(array(
                 "status" => "error",

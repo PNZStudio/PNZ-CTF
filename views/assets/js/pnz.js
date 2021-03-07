@@ -87,6 +87,7 @@ if (login !== '') {
         }
     }, 'json');
 }
+
 setInterval(function () {
     if (login !== '') {
         $.post('/api/v1/me', { token: login }, function (res) {
