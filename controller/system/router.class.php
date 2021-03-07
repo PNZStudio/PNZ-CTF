@@ -1,6 +1,8 @@
 <?php
 include 'controller/system/altorouter.class.php';
 include 'system.class.php';
+include 'autoload.php';
+
 class router
 {
 
@@ -35,30 +37,30 @@ class router
 		$this->router->map("GET", "/contact", function () {
 			$this->loadpage("contact");
 		});
-		// BACKEND //
-		$this->router->map("GET", "/backend", function () {
-			$this->loadbackend("home");
+		$this->router->map("GET", "/login", function () {
+			$this->loadpage("login");
 		});
-		$this->router->map("GET", "/backend/home", function () {
-			$this->loadbackend("home");
+		$this->router->map("GET", "/register", function () {
+			$this->loadpage("register");
 		});
-		$this->router->map("GET", "/backend/challenges", function () {
-			$this->loadbackend("challenges");
-		});
-		$this->router->map("GET", "/backend/users", function () {
-			$this->loadbackend("users");
-		});
-		$this->router->map("GET", "/backend/setting", function () {
-			$this->loadbackend("setting");
+		$this->router->map("GET", "/logout", function () {
+			$this->loadpage("logout");
 		});
 
 		// API //
+		$this->router->map("POST", "/api/v1/login", function () {
+			$this->loadapi("login");
+		});
+		$this->router->map("POST", "/api/v1/register", function () {
+			$this->loadapi("register");
+		});
+		$this->router->map("POST", "/api/v1/fb_login", function () {
+			$this->loadapi("fb_login");
+		});
 		$this->router->map("POST", "/api/v1/me", function () {
 			$this->loadapi("me");
 		});
-		$this->router->map("POST", "/api/v1/auth", function () {
-			$this->loadapi("auth");
-		});
+
 	}
 
 	private function end_router()
@@ -76,12 +78,6 @@ class router
 		require_once 'views/body/header.php';
 		require_once 'views/body/navbar.php';
 	}
-	private static function htmlheaderbackend()
-	{
-		require_once 'views/body/style.php';
-		require_once 'views/body/header.php';
-		require_once 'views/body/backendnavbar.php';
-	}
 	private static function htmlfooter()
 	{
 		require_once 'views/body/footer.php';
@@ -90,6 +86,16 @@ class router
 	{
 		$page_now = $page;
 		$class = new system();
+		if(isset($_COOKIE['token'])){
+			if($_COOKIE['token'] !== ""){
+				$check = $class->db(
+					"SELECT * FROM `member` WHERE token = ?",
+					array($_COOKIE['token']),
+					true
+				);
+				$_SESSION['login'] = $check[0]['token'];
+			}
+		}
 		Self::htmlheader();
 		require_once "views/page/" . $page . ".php";
 		Self::htmlfooter();
@@ -105,13 +111,7 @@ class router
 	private function loadapi($nameapi)
 	{
 		$class = new system();
+		$recaptcha = new \ReCaptcha\ReCaptcha("6Le1s3MaAAAAAEPbLgONpTlL7ClF8XGiP4CrUN3X");
 		require_once "controller/api/" . $nameapi . ".php";
-	}
-	private function loadbackend($backendname)
-	{
-		$class = new system();
-		Self::htmlheaderbackend();
-		require_once "views/backend/" . $backendname . ".php";
-		Self::htmlfooter();
 	}
 }

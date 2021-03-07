@@ -1,25 +1,37 @@
 <?php
 include 'connect.class.php';
-class system extends pdo_connection
-{
-	function __construct()
-	{
+
+class system extends pdo_connection{
+
+	function __construct(){
 		$this->db = $this->DB_PDO();
 	}
-	public function fitter($text)
-	{
+	public function fitter($text){
 		$pattern_eng = "/^[a-zA-Z0-9]{1,}$/";
-		if (preg_match($pattern_eng, $text)) {
+		if (preg_match($pattern_eng,$text)) {
 			return 0;
-		} else {
+		}else{
 			return 1;
 		}
 	}
-	public function webconfig($hurkao)
-	{
-		$configquery = $this->db->prepare("SELECT * FROM setting WHERE `name` = ?");
-		$configquery->execute(array($hurkao));
-		$config = $configquery->fetch(PDO::FETCH_ASSOC);
-		return $config['content'];
+	public function db($sql,$data = array(),$fetch = false){
+		if($fetch == false){
+			$db = $this->db->prepare($sql);
+			$db->execute($data);
+			return true;
+		}else{
+			$db = $this->db->prepare($sql);
+			$db->execute($data);
+			return $result = $db->fetchAll(\PDO::FETCH_ASSOC);
+		}
+	}
+	public function password($pass){
+		return md5((md5(base64_encode($pass))));
+	}
+	public function token($pass){
+		return "PNZZA".substr(strtoupper(md5(base64_encode(md5(md5(base64_encode($pass)))))),8);
+	}
+	public function re($url){
+		header("location: ".$url);
 	}
 }

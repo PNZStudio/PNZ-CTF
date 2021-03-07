@@ -1,7 +1,6 @@
-<?php
-?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US">
+
 <head>
 	<meta charset="utf-8">
 	<meta property="og:image" content="/img/cover.jpg">

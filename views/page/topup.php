@@ -1,3 +1,10 @@
+<?php
+
+if(!isset($_SESSION['login'])){
+    $class->re("/login");
+}
+
+?>
 <div class="container mt-3">
     <div class="col-sm-6 m-auto">
         <div class="card">
